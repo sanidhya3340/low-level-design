@@ -1,0 +1,86 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class WalkableRoboat {
+public:
+	virtual void walk() = 0;
+
+};
+
+class NormalWalk : public WalkableRoboat {
+public:
+	void walk() override {
+		cout<<"I am walking"<<endl;
+	}
+};
+
+class NoWalk : public WalkableRoboat {
+public:
+	void walk() override {
+		cout<<"I can not walk"<<endl;
+	}
+};
+
+class TalkableRoboat {
+public:
+	virtual void talk() = 0;
+};
+
+class NormalTalk : public TalkableRoboat {
+public:
+	void talk() override {
+		cout<<"I am talking"<<endl;
+	}
+};
+
+class NoTalk : public TalkableRoboat {
+public:
+	void talk() override {
+		cout<<"I can't talk"<<endl;
+	}
+};
+
+
+class Roboat {
+private:
+	WalkableRoboat* walkBehaviour;
+	TalkableRoboat* talkBehaviour;
+public:
+	Roboat(WalkableRoboat* w, TalkableRoboat* t) {
+		this->walkBehaviour = w;
+		this->talkBehaviour = t;
+	}
+	void walk() {
+		walkBehaviour->walk();
+	}
+	void talk() {
+		talkBehaviour->talk();
+	}
+	virtual void projection() = 0;
+};
+
+class CompanionRoboat : public Roboat {
+public:
+	CompanionRoboat(WalkableRoboat* w, TalkableRoboat* t) : Roboat(w,t) {}
+	void projection()  {
+		cout<<"I am CompanionRoboat";
+	}
+};
+
+int main()
+{
+	CompanionRoboat* companionR = new CompanionRoboat(new NormalWalk(), new NoTalk());
+	companionR->walk();
+	companionR->talk();
+	companionR->projection();
+
+	return 0;
+}
