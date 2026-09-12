@@ -1,0 +1,87 @@
+// Online C++ compiler to run C++ program online
+#include <bits/stdc++.h>
+using namespace std;
+
+class Burger{
+    public:
+        virtual void prepare() = 0;
+        virtual ~Burger() {} //virtual destructor
+};
+
+class BasicBurger : public Burger{
+    public:
+        void prepare() override{
+            cout<<"Preapring Basic burger"<<endl;
+        }
+};
+class StandardBurger : public Burger{
+    public:
+        void prepare() override{
+            cout<<"Preapring Standard burger"<<endl;
+        }
+};
+class PremiumBurger : public Burger{
+    public:
+        void prepare() override{
+            cout<<"Preapring Premium burger"<<endl;
+        }
+};
+class BasicWheatBurger : public Burger{
+    public:
+        void prepare() override{
+            cout<<"Preapring Basic Wheat burger"<<endl;
+        }
+};
+class StandardWheatBurger : public Burger{
+    public:
+        void prepare() override{
+            cout<<"Preapring Standard Wheat burger"<<endl;
+        }
+};
+class PremiumWheatBurger : public Burger{
+    public:
+        void prepare() override{
+            cout<<"Preapring Premium Wheat burger"<<endl;
+        }
+};
+
+class BurgerFactory{
+public:
+    virtual Burger* createBurger(string& type) = 0;   
+};
+
+class SinghBurger : public BurgerFactory {
+public:
+    Burger* createBurger(string& type) override {
+        if(type == "basic"){
+            return new BasicBurger();
+        }else if(type == "standard"){
+            return new StandardBurger();
+        }else if(type == "premium"){
+            return new PremiumBurger();
+        }
+    }
+};
+class KingBurger : public BurgerFactory {
+public:
+    Burger* createBurger(string& type) override {
+        if(type == "basic"){
+            return new BasicWheatBurger();
+        }else if(type == "standard"){
+            return new StandardWheatBurger();
+        }else if(type == "premium"){
+            return new PremiumWheatBurger();
+        }
+        return new BasicWheatBurger();
+    }
+};
+
+
+
+int main() {
+    string type = "basic";
+    BurgerFactory* factory = new KingBurger();
+    Burger* burger = factory->createBurger(type);
+    burger->prepare();
+    return 0;
+}
