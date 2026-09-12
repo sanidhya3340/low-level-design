@@ -1,0 +1,154 @@
+// Online C++ compiler to run C++ program online
+#include <bits/stdc++.h>
+using namespace std;
+
+class Burger{
+    public:
+        virtual void prepare() = 0;
+        virtual ~Burger() {} //virtual destructor
+};
+
+class BasicBurger : public Burger{
+    public:
+        void prepare() override{
+            cout<<"Preapring Basic burger"<<endl;
+        }
+};
+class StandardBurger : public Burger{
+    public:
+        void prepare() override{
+            cout<<"Preapring Standard burger"<<endl;
+        }
+};
+class PremiumBurger : public Burger{
+    public:
+        void prepare() override{
+            cout<<"Preapring Premium burger"<<endl;
+        }
+};
+class BasicWheatBurger : public Burger{
+    public:
+        void prepare() override{
+            cout<<"Preapring Basic Wheat burger"<<endl;
+        }
+};
+class StandardWheatBurger : public Burger{
+    public:
+        void prepare() override{
+            cout<<"Preapring Standard Wheat burger"<<endl;
+        }
+};
+class PremiumWheatBurger : public Burger{
+    public:
+        void prepare() override{
+            cout<<"Preapring Premium Wheat burger"<<endl;
+        }
+};
+
+class GarlicBread{
+public:
+    virtual void prepare() = 0;
+    virtual ~GarlicBread(){}
+};
+
+class BasicGarlicBread : public GarlicBread{
+public:
+    void prepare() override {
+        cout<<"Preparing basic Garlic Bread"<<endl;
+    }
+};
+class StandardGarlicBread : public GarlicBread{
+public:
+    void prepare() override {
+        cout<<"Preparing standard Garlic Bread"<<endl;
+    }
+};
+class PremiumGarlicBread : public GarlicBread{
+public:
+    void prepare() override {
+        cout<<"Preparing premium Garlic Bread"<<endl;
+    }
+};
+class BasicWheatGarlicBread : public GarlicBread{
+public:
+    void prepare() override {
+        cout<<"Preparing basic Wheat Garlic Bread"<<endl;
+    }
+};
+class StandardWheatGarlicBread : public GarlicBread{
+public:
+    void prepare() override {
+        cout<<"Preparing standard Wheat Garlic Bread"<<endl;
+    }
+};
+class PremiumWheatGarlicBread : public GarlicBread{
+public:
+    void prepare() override {
+        cout<<"Preparing premium Wheat Garlic Bread"<<endl;
+    }
+};
+
+class FoodFactory{
+public:
+    virtual Burger* createBurger(string& type) = 0;   
+    virtual GarlicBread* createGarlicBread(string& type) = 0;
+};
+
+class SinghBurger : public FoodFactory {
+public:
+    Burger* createBurger(string& type) override {
+        if(type == "basic"){
+            return new BasicBurger();
+        }else if(type == "standard"){
+            return new StandardBurger();
+        }else if(type == "premium"){
+            return new PremiumBurger();
+        }
+    }
+
+    GarlicBread* createGarlicBread(string& type) override {
+        if(type == "basic"){
+            return new BasicGarlicBread();
+        }else if(type == "standard"){
+            return new StandardGarlicBread();
+        }else if(type == "premium"){
+            return new PremiumGarlicBread();
+        }
+    }
+};
+class KingBurger : public FoodFactory {
+public:
+    Burger* createBurger(string& type) override {
+        if(type == "basic"){
+            return new BasicWheatBurger();
+        }else if(type == "standard"){
+            return new StandardWheatBurger();
+        }else if(type == "premium"){
+            return new PremiumWheatBurger();
+        }
+        return new BasicWheatBurger();
+    }
+    GarlicBread* createGarlicBread(string& type) override {
+        if(type == "basic"){
+            return new BasicWheatGarlicBread();
+        }else if(type == "standard"){
+            return new StandardWheatGarlicBread();
+        }else if(type == "premium"){
+            return new PremiumWheatGarlicBread();
+        }
+        return new BasicWheatGarlicBread();
+    }
+};
+
+
+
+int main() {
+    string burgerType = "basic";
+    string garlicBreadType = "premium";
+    FoodFactory* factory = new KingBurger();
+    Burger* burger = factory->createBurger(burgerType);
+    burger->prepare();
+    GarlicBread* garlicBread = factory->createGarlicBread(garlicBreadType);
+    garlicBread->prepare();
+    return 0;
+}
